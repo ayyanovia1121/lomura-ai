@@ -5,6 +5,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { dark } from "@clerk/themes";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -32,7 +34,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <Header />
+            <main className="min-h-screen">{children}</main>
+            <Footer />
           </ThemeProvider>
         </body>
       </html>
