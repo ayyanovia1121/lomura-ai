@@ -1,3 +1,4 @@
+import CtaSection from "@/components/CTASection";
 import FaqSection from "@/components/FaqSection";
 import FeatureSection from "@/components/FeatureSection";
 import Hero from "@/components/Hero";
@@ -15,6 +16,7 @@ export default function Home() {
         <ServiceSection />
         <TestimonialSection />
         <FaqSection />
+        <CtaSection />
     </div>
   );
 }
