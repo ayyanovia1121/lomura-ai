@@ -1,5 +1,12 @@
-import { BrainCircuit, Briefcase, LineChart, ScrollText } from "lucide-react";
-import { describe } from "node:test";
+import {
+  BrainCircuit,
+  Briefcase,
+  FileEdit,
+  LineChart,
+  ScrollText,
+  UserPlus,
+  Users,
+} from "lucide-react";
 
 export const featuresSection = [
   {
@@ -43,5 +50,29 @@ export const staticticsData = [
   {
     title: "24/7",
     description: "AI Support",
+  },
+];
+
+export const services = [
+  {
+    title: "Professional Onboarding",
+    description: "Share your industry and expertise for personalized guidance",
+    icon: UserPlus,
+  },
+  {
+    title: "Craft Your Documents",
+    description: "Create ATS-optimized resumes and compelling cover letters",
+    icon: FileEdit,
+  },
+  {
+    title: "Prepare for Interviews",
+    description:
+      "Practice with AI-powered mock interviews tailored to your role",
+    icon: Users,
+  },
+  {
+    title: "Track Your Progress",
+    description: "Monitor improvements with detailed performance analytics",
+    icon: LineChart,
   },
 ];
