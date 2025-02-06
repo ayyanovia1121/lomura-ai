@@ -1,6 +1,5 @@
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["prismaSchemaFolder"]
+    provider = "prisma-client-js"
 }
 
 datasource db {
@@ -9,28 +8,106 @@ datasource db {
 }
 
 model User {
-    id          String   @id @default(uuid())
-    clerkUserId String   @unique
-    email       String   @unique
-    imageUrl    String?
-    industry    String?
-    createdAt   DateTime
-    updatedAt   DateTime
-    bio         String?
-    experience  Int?
+    id              String           @id @default(uuid())
+    clerkUserId     String           @unique
+    email           String           @unique
+    name            String?
+    imageUrl        String?
+    industry        String?
+    industryInsight IndustryInsight? @relation(fields: [industry], references: [industry])
+    createdAt       DateTime         @default(now())
+    updatedAt       DateTime         @updatedAt
+
+    // Profile field
+    bio        String?
+    experience Int?
+
+    // Relations
     skills      String[]
+    assessments Assessment[]
+    resume      Resume?
+    coverLetter CoverLetter[]
 }
 
-model IndustryInsights {
-    id                String   @id @default(uuid())
-    industry          String   @unique
-    salaryRange       Json[]
-    growthRate        Float
-    demandLevel       String
-    topSkills         String[]
-    marketOutlook     String
-    keyTrends         String[]
-    recommendedSkills String[]
-    lastUpdated       DateTime
-    nextUpdate        DateTime
+model Assessment {
+    id             String   @id @default(uuid())
+    userId         String?
+    user           User?    @relation(fields: [userId], references: [id])
+    quizScore      Float //overall quiz score
+    questions      Json[] //Array of (Question, answer, useranswer, iscorrect)
+    category       String //"technical", "behavioral", etc
+    improvementTip String? //AI-generated improvement tip
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+
+    @@index([userId])
+}
+
+model Resume {
+    id      String @id @default(uuid())
+    userId  String @unique //one resume for user
+    user    User   @relation(fields: [userId], references: [id])
+    content String @db.Text //markdown content
+
+    // do it latter
+    // atsScore  Float?
+    // feedback  String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model CoverLetter {
+    id             String   @id @default(uuid())
+    userId         String   @unique //one resume for user
+    user           User     @relation(fields: [userId], references: [id])
+    content        String //markdown content
+    jobDescription String?
+    companyName    String
+    jobTitle       String
+    status         String
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+
+    @@index([userId])
+}
+
+model IndustryInsight {
+    id       String @id @default(uuid())
+    industry String @unique
+
+    // Users in this Industry
+    users User[]
+
+    // Salary Data
+    salaryRanges Json[] //array of {role:string, min: float, max: float, median: float, location: string?}
+
+    // Industry Trends
+    growthRate  Float //industry growth rate
+    demandLevel DemandLevel //High, Medium, Low
+    topSkills   String[] //Most in-demand skills
+
+    //Market Condition
+    marketOutlook MarketOutlook //Positive", "Neutral", "Negative"
+    keyTrends     String[] //array of current industry trends
+
+    // Learning Suggestions
+    recommendedSkills String[] //Skill recomended for the industry
+
+    lastUpdated DateTime
+    nextUpdate  DateTime
+
+    @@index([industry])
+}
+
+enum DemandLevel {
+    High
+    Medium
+    LOW
+}
+
+enum MarketOutlook {
+    POSITIVE
+    NEUTRAL
+    NEGATIVE
 }
