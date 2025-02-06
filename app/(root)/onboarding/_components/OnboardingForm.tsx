@@ -1,6 +1,4 @@
-import React from 'react'
-
-const OnboardingForm = () => {
+const OnboardingForm = ({industries}: any) => {
   return (
     <div>OnboardingForm</div>
   )
