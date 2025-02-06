@@ -1,9 +1,7 @@
-import React from 'react'
-
-const page = () => {
+const IndustryInsightsPage = () => {
   return (
-    <div>page</div>
+    <div>IndustryInsightsPage</div>
   )
 }
 
-export default page
+export default IndustryInsightsPage
